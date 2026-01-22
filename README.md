@@ -44,8 +44,8 @@ Profesyonel JWT (JSON Web Token) analiz ve güvenlik tarama aracı. Web uygulama
 ### Manuel Kurulum (Developer Mode)
 1. Bu repository'yi indirin:
 ```bash
-   git clone https://github.com/kullaniciadi/jwt-decoder-pro.git
-   cd jwt-decoder-pro
+   git clone https://github.com/muratgzl/jwt-decoder-pro-v1.0.0.git
+   cd jwt-decoder-pro-v1.0.0
 ```
 
 2. Chrome'u açın ve şu adrese gidin:
@@ -57,7 +57,7 @@ Profesyonel JWT (JSON Web Token) analiz ve güvenlik tarama aracı. Web uygulama
 
 4. **"Load unpacked"** butonuna tıklayın
 
-5. İndirdiğiniz `jwt-decoder-pro` klasörünü seçin
+5. İndirdiğiniz `jwt-decoder-pro-v1.0.0` klasörünü seçin
 
 6. Extension yüklendi! ✅
 
@@ -146,7 +146,7 @@ Katkılarınızı bekliyoruz! Lütfen şu adımları izleyin:
 
 ## 🐛 Hata Bildirimi
 
-Bir hata mı buldunuz? [Issue açın](https://github.com/kullaniciadi/jwt-decoder-pro/issues)
+Bir hata mı buldunuz? [Issue açın](https://github.com/muratgzl/jwt-decoder-pro-v1.0.0/issues)
 
 Lütfen şunları ekleyin:
 - Chrome versiyonu
@@ -174,9 +174,9 @@ MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 ## 👨‍💻 Geliştirici
 
 **[Adınız]**
-- GitHub: [@kullaniciadi](https://github.com/kullaniciadi)
-- LinkedIn: [Profiliniz](https://linkedin.com/in/profiliniz)
-- Email: email@example.com
+- GitHub: [@muratgzl](https://github.com/muratgzl)
+- LinkedIn: [Murat Güzel](https://linkedin.com/in/ymuratguzel)
+- Email: yigitmuratguzel@outlook.com
 
 ## 🙏 Teşekkürler
 
@@ -188,7 +188,7 @@ MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
 Projeyi beğendiyseniz yıldız vermeyi unutmayın!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=kullaniciadi/jwt-decoder-pro&type=Date)](https://star-history.com/#kullaniciadi/jwt-decoder-pro&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=muratgzl/jwt-decoder-pro-v1.0.0&type=Date)](https://star-history.com/#muratgzl/jwt-decoder-pro-v1.0.0&Date)
 
 ---
 
@@ -201,7 +201,7 @@ Projeyi beğendiyseniz yıldız vermeyi unutmayın!
 ```
 MIT License
 
-Copyright (c) 2025 [Adınız]
+Copyright (c) 2025 Murat Güzel
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

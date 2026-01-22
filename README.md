@@ -93,13 +93,13 @@ Profesyonel JWT (JSON Web Token) analiz ve güvenlik tarama aracı. Web uygulama
 ## 📸 Ekran Görüntüleri
 
 ### Yakalanan Tokenlar
-![Captured Tokens](screenshots/captured.png)
+![Captured Tokens](screenshots/image.png)
 
 ### Güvenlik Analizi
-![Security Analysis](screenshots/analysis.png)
+![Security Analysis](screenshots/image4.png)
 
 ### Güvenlik Skoru
-![Security Score](screenshots/score.png)
+![Security Score](screenshots/image3.png)
 
 ## 🛠️ Teknolojiler
 

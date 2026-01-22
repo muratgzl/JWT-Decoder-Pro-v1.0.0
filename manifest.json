@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "JWT Decoder Pro",
+    "version": "1.0.0",
+    "description": "JWT tokenlarını yakala, decode et ve analiz et",
+    "permissions": [
+        "storage",
+        "webRequest",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "icons": {
+        "128": "icon.png"
+    }
+}

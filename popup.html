@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JWT Decoder Pro</title>
+  <style>
+    body {
+      width: 550px;
+      min-height: 500px;
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+    }
+    
+    .header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .header .stats {
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: white;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+    
+    .tab:hover {
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    .tab.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+      background: white;
+    }
+    
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      padding: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Captured Tab */
+    .token-list {
+      margin-bottom: 15px;
+    }
+    
+    .token-item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    
+    .token-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .token-source {
+      font-size: 12px;
+      color: #667eea;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .token-url {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .token-preview {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #666;
+      background: #f5f5f5;
+      padding: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .token-time {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 10px;
+      color: #999;
+    }
+    
+    .delete-btn {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    .token-item:hover .delete-btn {
+      opacity: 1;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+    
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    
+    .clear-all-btn {
+      width: 100%;
+      padding: 12px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .clear-all-btn:hover {
+      background: #d32f2f;
+    }
+    
+    /* Analyze Tab */
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    button.analyze-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    
+    button.analyze-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .result {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .result h3 {
+      margin: 15px 0 8px 0;
+      color: #555;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    pre {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 11px;
+      border: 1px solid #e0e0e0;
+      margin: 0 0 10px 0;
+      position: relative;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    pre:hover .copy-btn {
+      opacity: 1;
+    }
+    
+    .copy-btn:hover {
+      background: #764ba2;
+    }
+    
+    /* Security Analysis */
+    #security-analysis {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .security-score {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    #score-value {
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    #score-text {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    
+    .issue-section {
+      margin: 15px 0;
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .issue-header {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .issue-header.critical {
+      color: #f44336;
+      border-bottom-color: #f44336;
+    }
+    
+    .issue-header.warning {
+      color: #FF9800;
+      border-bottom-color: #FF9800;
+    }
+    
+    .issue-header.info {
+      color: #2196F3;
+      border-bottom-color: #2196F3;
+    }
+    
+    .issue-item {
+      margin: 10px 0;
+      padding: 12px;
+      border-left: 4px solid #ddd;
+      background: #fafafa;
+      border-radius: 4px;
+    }
+    
+    .issue-item.critical {
+      border-left-color: #f44336;
+      background: #ffebee;
+    }
+    
+    .issue-item.warning {
+      border-left-color: #FF9800;
+      background: #fff3e0;
+    }
+    
+    .issue-item.info {
+      border-left-color: #2196F3;
+      background: #e3f2fd;
+    }
+    
+    .issue-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    
+    .issue-description {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    
+    .issue-detail {
+      font-size: 11px;
+      color: #888;
+      font-family: monospace;
+      margin-top: 4px;
+    }
+    
+    .issue-fix {
+      margin-top: 8px;
+      padding: 8px;
+      background: white;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #4CAF50;
+    }
+    
+    .issue-note {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #777;
+      font-style: italic;
+    }
+    
+    .success-message {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>🔐 JWT Decoder Pro</h2>
+    <div class="stats">
+      <span id="token-count">0 token yakalandı</span>
+    </div>
+  </div>
+  
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="captured">Yakalanan</button>
+    <button class="tab" data-tab="analyze">Analiz Et</button>
+  </div>
+  
+  <!-- Captured Tab -->
+  <div class="tab-content active" id="captured-tab">
+    <div class="token-list" id="token-list">
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <p>Henüz JWT yakalanmadı</p>
+        <p style="font-size: 12px;">Web sitelerinde gezinin, otomatik olarak JWT'ler yakalanacak</p>
+      </div>
+    </div>
+    <button class="clear-all-btn" id="clear-all" style="display:none;">Tümünü Temizle</button>
+  </div>
+  
+  <!-- Analyze Tab -->
+  <div class="tab-content" id="analyze-tab">
+    <p style="margin: 10px 0; color: #666;">JWT token'ınızı buraya yapıştırın:</p>
+    
+    <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0..."></textarea>
+    
+    <button class="analyze-btn" id="decode-btn">🔍 Decode & Analyze</button>
+    
+    <div class="result" id="result">
+      <h3>📋 Header</h3>
+      <pre id="header-output"><button class="copy-btn" data-copy="header">Copy</button></pre>
+      
+      <h3>📦 Payload</h3>
+      <pre id="payload-output"><button class="copy-btn" data-copy="payload">Copy</button></pre>
+      
+      <h3>🔏 Signature</h3>
+      <pre id="signature-output"><button class="copy-btn" data-copy="signature">Copy</button></pre>
+    </div>
+    
+    <div id="security-analysis">
+      <h3 style="margin-top: 20px; color: #333;">🛡️ Güvenlik Analizi</h3>
+      
+      <div class="security-score">
+        <div class="score-circle" id="score-circle">
+          <span id="score-value">0</span>
+        </div>
+        <div id="score-text"></div>
+      </div>
+      
+      <div id="issues-container"></div>
+    </div>
+  </div>
+  
+  <script src="security-checker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
